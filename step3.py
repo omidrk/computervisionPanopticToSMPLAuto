@@ -1,6 +1,9 @@
 from collections import defaultdict
 import pandas as pd
 import os
+import argparse
+import numpy as np
+import joblib
 
 
 
@@ -37,19 +40,25 @@ def clean_data(pkl_folder_path, output_path, list_keys = ['pose', 'betas'], pikl
     
     
 if __name__ == '__main__':
+
+    try:
+        # os.mkdir('outpkl',exist=True)
+        os.mkdir('ashpickle',exist=True)
+    except:
+        print('cant make a output folder. Please make it before run. :(')
     
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--pkl_folder_path', type=str,default='',
+    parser.add_argument('--pkl_folder_path', type=str,default='outpkl',
                         help='input pkls floder path')
     
-    parser.add_argument('--output_path', type=str,default='',
+    parser.add_argument('--output_path', type=str,default='ashpickle',
                         help='output path')
     
     parser.add_argument('--list_keys', type=list,default=['pose', 'betas'],
                         help='list of the key that we want to save')
     
-    parser.add_argument('--pikl_protocol', type=int,default=4,
+    parser.add_argument('--pkl_protocol', type=int,default=4,
                         help='pikl protocol for saving')
 
 
@@ -58,4 +67,4 @@ if __name__ == '__main__':
     
     args = parser.parse_args()
 
-    main(args.pkl_folder_path, args.output_path, args.list_keys, args.pikl_protocol)
+    clean_data(args.pkl_folder_path, args.output_path, args.list_keys, args.pkl_protocol)

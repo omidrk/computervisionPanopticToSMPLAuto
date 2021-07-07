@@ -75,7 +75,8 @@ def extract_information(image_folder_cam):
     
     img = cv2.imread(image_folder_cam+'/000001.png').shape
     image_folder = image_folder_cam
-    orig_height, orig_width = img[:2]
+    orig_height = 1080
+    orig_width = 1920
     
     vibe_results = {}
 
@@ -192,6 +193,11 @@ if __name__ == '__main__':
     
     image_folder_path = 'images_beta/'
     output_path = 'out_test'
+    try:
+        os.mkdir('outpkl',exist=True)
+        # os.mkdir('outpkl',exist=True)
+    except:
+        print('cant make a output folder. Please make it before run. :(')
     
     
     parser = argparse.ArgumentParser()
@@ -199,7 +205,7 @@ if __name__ == '__main__':
     parser.add_argument('--image_folder_path', type=str,default='images_beta/',
                         help='input images path')
     
-    parser.add_argument('--output_path', type=str,default='out_test/',
+    parser.add_argument('--output_path', type=str,default='outpkl/',
                         help='output path')
 
         

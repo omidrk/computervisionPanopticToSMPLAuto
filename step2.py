@@ -2,6 +2,7 @@ from collections import defaultdict
 from torch.utils.data import Dataset
 import joblib
 import os
+import torch
 
 class PoseBetaData(Dataset):
     """pose and beta dataset"""
@@ -20,7 +21,7 @@ class PoseBetaData(Dataset):
                 keys.append(k)
                 
         if len(data) != len(keys):
-            prin("err")
+            print("err")
             
         self.length = len(data[0][keys[0]]['pose'])
         
@@ -42,7 +43,12 @@ class PoseBetaData(Dataset):
 
     def __getitem__(self, idx):
         
-        poses = self.dataset['pose'][idx]
-        betas = self.dataset['beta'][idx]
+        poses = torch.tensor(self.dataset['pose'][idx])
+        betas = torch.tensor(self.dataset['beta'][idx])
         
         return poses, betas
+
+if __name__ == '__main__':
+    dl = PoseBetaData('./out_pkl/00_00.pkl')
+    print(len(dl))
+    
