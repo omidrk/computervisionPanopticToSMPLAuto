@@ -46,8 +46,6 @@ python step4.py --model-folder models --model-type smpl --batch_pickle ashpickle
 - VIBE network thanks to [link](https://github.com/mkocabas/VIBE.git)
 - SMPLX network thanks to [link](https://github.com/vchoutas/smplx)
 - Pretrained HMR and some functions are borrowed from [SPIN](https://github.com/nkolot/SPIN).
-- SMPL models and layer is from [SMPL-X model](https://github.com/vchoutas/smplx).
 - Some functions are borrowed from [Temporal HMR](https://github.com/akanazawa/human_dynamics).
 - Some functions are borrowed from [HMR-pytorch](https://github.com/MandyMo/pytorch_HMR).
 - Some functions are borrowed from [Kornia](https://github.com/kornia/kornia).
-- Pose tracker is from [STAF](https://github.com/soulslicer/openpose/tree/staf).
