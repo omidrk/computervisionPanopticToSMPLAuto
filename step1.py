@@ -73,7 +73,7 @@ def extract_information(image_folder_cam):
     print(f'Loaded pretrained weights from \"{pretrained_file}\"')
     
     
-    img = cv2.imread(image_folder_cam+'/000001.png').shape
+    img = cv2.imread(image_folder_cam+'/'+os.listdir(image_folder_cam)[0]).shape
     image_folder = image_folder_cam
     orig_height = 1080
     orig_width = 1920

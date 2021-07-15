@@ -144,25 +144,40 @@ def main(model_folder,
     gb = torch.ones([4,3],dtype=torch.float32)/2
     it = iter(ds)
 
+
     import open3d as o3d
     geometry = []
-    for i in range(1000):
+    V = []
+    for i in range(len(ds)):
         
         a,b = next(it)
         output = model(body_pose=a,betas=b,return_verts=True,global_orient= gb)
         vertices = output.vertices.detach().cpu().numpy().squeeze()
+        
+        if i < 6:
+            V.append(np.mean(vertices,0))
+            
+        else:
+            v2 = np.mean(vertices,0)
+            V.append(np.mean([V[-1], V[-2], V[-3], V[-4], v2], 0))
+            
+        
+        
         joints = output.joints.detach().cpu().numpy().squeeze()
-
         mesh = o3d.geometry.TriangleMesh()
         mesh.vertices = o3d.utility.Vector3dVector(
-            np.mean(vertices,0))
+            V[-1])
         mesh.triangles = o3d.utility.Vector3iVector(model.faces)
         mesh.compute_vertex_normals()
         mesh.paint_uniform_color([0.3, 0.3, 0.3])
 
         geometry.append(mesh)
         if i%50 == 0:
-            print(f'{i} sample out of 1000 sample rendered.')
+            print(f'{i} sample out of {len(ds)} sample rendered.')
+#             print(v2.shape)
+            
+        
+        
         
     # for i in range(4):
 
@@ -189,9 +204,12 @@ def main(model_folder,
     # geometry.append(mesh)
 
     #rendering and save files to pics folder. 
+
     vis= o3d.visualization.Visualizer()
-    vis.create_window(window_name = 'test', width = 960, height=540,  visible=False)
+    vis.create_window(window_name = 'test', width = 960, height=540,  visible=True)
     vis.add_geometry(geometry[0])
+    print(geometry[0])
+
 
     #View Controll
     ctr = vis.get_view_control()
@@ -199,7 +217,8 @@ def main(model_folder,
     # ctr.set_up([0,0,1])
     # ctr.set_zoom(0.9)
     # Updates
-    for i in range(1000):
+
+    for i in range(len(geometry) -1):
         vis.add_geometry(geometry[i+1])
         vis.remove_geometry(geometry[i])
         vis.update_geometry(geometry[i+1])
@@ -262,7 +281,7 @@ if __name__ == '__main__':
                         type=int,
                         help='num epochs.')
     parser.add_argument('--batch_pickle', default='ashpickle',
-                        type=int,
+                        type=str,
                         help='path to batched pickle of step 3.')
     
 
