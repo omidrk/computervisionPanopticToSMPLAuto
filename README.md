@@ -39,6 +39,11 @@ meshes.
 ```bash
 python step4.py --model-folder models --model-type smpl --batch_pickle ashpickle
 ```
+## RESULT
+![output](https://github.com/omidrk/computervisionPanopticToSMPLAuto/blob/main/gifs/output.gif)
+![Input random](https://github.com/omidrk/computervisionPanopticToSMPLAuto/blob/main/gifs/input.gif)
+
+
 
 ## References
 
